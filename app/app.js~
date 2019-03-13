@@ -1,0 +1,20 @@
+const https = require("https");
+//const express = require("express");
+const fs = require("fs");
+
+const options = {
+  key: fs.readFileSync("/etc/letsencrypt/live/suite.keepout.de/privkey.pem"),
+  cert: fs.readFileSync("/etc/letsencrypt/live/suite.keepout.de/fullchain.pem")
+};
+      
+//const app = express();
+      
+app.use((req, res) => {
+  res.writeHead(200);
+  res.end("hello world\n");
+});
+
+https.createServer(options, (req, res) => {
+  res.writeHead(200);
+  res.end("hello world\n");
+}).listen(443);
