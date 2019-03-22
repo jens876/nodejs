@@ -24,14 +24,8 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
-  function load() {
-    console.log("Loaded");
-    if (document.cokkie != "") {
-      document.getElementsByClassName("name")[0].value = document.cookie.replace(/(?:(?:^|.*;\s*)username\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-    }
-  }
+  var socket = io();
   $(function () {
-    var socket = io();
     $('form').submit(function(e){
       e.preventDefault(); // prevents page reloading
       socket.emit('chat message', $('#name').val(), $('#m').val());
@@ -43,6 +37,13 @@
       $('#messages').append($('<li>').text(msg));
     });
   });
+  function load() {
+    console.log("Loaded");
+    if (document.cokkie != "") {
+      document.getElementsByClassName("name")[0].value = document.cookie.replace(/(?:(?:^|.*;\s*)username\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    }
+    socket.emit('getHistory');
+  }
   </script>
   </body>
 </html>
